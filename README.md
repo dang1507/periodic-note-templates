@@ -6,6 +6,36 @@ A set of periodic note templates for Obsidian.md.
 *Theme: [Viridian](https://github.com/mulfok/obsidian-viridian)*
 ___
 
+
+# Modified by Dang
+Props to the original creators!
+
+Weather information can be found by following the following article by Ben Newton
+https://benenewton.medium.com/adding-the-current-weather-to-my-obsidian-daily-note-793591026a0a
+
+## Additional Notes
+This has been modified from the original script. The original weekly note is still present in the js file, and it will function as normal using the files Daily Note Template and Weekly Note Template once you have followed the instructions below. 
+
+My versions can be identified by starting with T.Periodic.
+
+There are now additional methods in the chart class. These classes render the Monthly by Day, Monthly by Week, Quarterly, and Annual charts. The steps are the same as below, with 2 changes. 
+
+1. My paths are different than MK's, so his same instructions apply. 
+2. You will need to modify the code in the dataview to reflect the new name of the method. For example
+
+Periodic Monthly 
+Change renderWeeklyChart to renderMonthlyChart to get a weekly breakdown. 
+
+Furthermore, I am still working on this to make the scripts neat. Current goals are the following. 
+Ensure that week numbers are mapped to week of year.
+Ensure that proper month names are displayed for quarter
+Ensure that the quarterly data and annual data are correct (going to wait until April for this)
+Add a button to 'fix' the graph. I don't want 100s of dynamic js charts in my vault. Once the week is finished, I want to copy/paste the image. 
+
+Code related: I didn't know any javascript before altering this file. So my spaghetti code and aweful everything are implicitly understood, please don't point them out without an example of how to make it better. Anything that makes the code better is greatly appreciated. :D
+
+Lastly, feel free to create issues, however, between work, school, and other obligations it may take me a while. 
+
 ## Before You Start...
 This collection of templates suit my **current** workflow. I supply them here and try to keep them to-date so that you lovely people are also able to use them. _By all means,_ you are encouraged to change the templates when you download them (you'll have to regardless, it's part of setup 😛) you may use a date format that I don't (these templates use YYYY-MM-DD by the way) or you may want to change what these notes track and whatnot. In short, these could/should be considered as a **base** to **your** perfect periodic note template.
 

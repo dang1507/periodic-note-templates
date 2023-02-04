@@ -286,12 +286,27 @@
 		return num;
 	}
 		
+	
+	function getYearWeek(num) {
+		if(num <52){
+			return num;
+		}
+		else{
+			num = 1
+			return num;
+		};
+
+		// return num;
+	}
+
+	let startWeek = parseInt(dv.date(date).startOf('month').toFormat("WW"));
 	const chartData = 
 	{
 		type: 'line',
 		data: 
 		{
-			labels: Object.keys(datasets).map(i => "Week " + pad(i,2)),
+			// labels: Object.keys(datasets).map(i => "Week " + pad(i,2)),
+			labels: Array.from({ length: 4 }, (c, i) => "Week " + pad((getYearWeek(startWeek) + i),2)),
 			datasets
 		}
 	}
@@ -321,7 +336,8 @@
 			type,
 			date
 		} = args;
-	
+		
+
 		const datasets = (() => 
 		{
 			const startOfQuarter = dv.date(date).startOf('quarter');
@@ -359,7 +375,7 @@
 			{
 				datasets[attr] = Object.assign({}, template, props, {data: getData(attr, props)})
 		
-				for (let [quarterNum, quarterData] of Object.entries(quarterlyData)) 
+				for (let [monthNum, quarterData] of Object.entries(quarterlyData)) 
 				{
 					datasets[attr] = Object.assign({}, template, props, {data: Object.values(quarterData)});
 				}
@@ -373,13 +389,20 @@
 		while (num.length < size) num = "0" + num;
 		return num;
 	}
-		
+	
+	// const getQuarterlyMonths = monthNum => dv.pages(`"${daysPath}"`).find(
+				// p => p.file.name == startOfQuarter.plus({ days: dayNum }).toFormat(dayFormat));
+	
+	let month = dv.date(date).month;
+	const monthList = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+	
 	const chartData = 
 	{
 		type: 'line',
 		data: 
 		{
-			labels: Object.keys(datasets).map(i => "Month " + pad(i,2)),
+			// labels: Object.keys(datasets).map(i => "Month " + pad(i,2)),
+			labels: Array.from({ length: 3 }, (c, i) => monthList[i]),
 			datasets
 		}
 	}
@@ -417,13 +440,14 @@
 			const endOfYear = dv.date(date).endOf('year');
 			const startOfQuarter = dv.date(date).startOf('quarter');
 			const endOfQuarter = dv.date(date).endOf('quarter');
-			
+			let currentYear = parseInt(new Date().getFullYear());
 			let annualData = {};
 			const yearLength = parseInt((endOfYear - startOfYear) / (24*3600*1000))
 			const quarterLength = parseInt((endOfQuarter - startOfQuarter) / (24*3600*1000))
 
 			const getQuarterlydays = dayNum => dv.pages(`"${daysPath}"`).find(
 				p => p.file.name == startOfQuarter.plus({ days: dayNum }).toFormat(dayFormat));
+			
 			const quarterlyDays = Array.from({ length: yearLength}, (c, i) => getQuarterlydays(i) || 0);
 
 
@@ -431,8 +455,12 @@
 			{
 				quarterlyDays.forEach(p => 
 				{
+
+					
 					let day = dv.date(date);
-					let quarterNum = p.quarter;
+
+					let quarterNum = Math.floor((p.month + 3) / 3);
+					
 					if (!annualData[attr]) 
 					{
 						annualData[attr] = {};
@@ -442,7 +470,7 @@
 						annualData[attr][quarterNum] = 0;
 					}
 					annualData[attr][quarterNum] += (type == 'average') ? (p[attr] / props.average * 100)/quarterLength || 0 : p[attr];
-
+					
 				});
 			}
 			
@@ -467,13 +495,14 @@
 		while (num.length < size) num = "0" + num;
 		return num;
 	}
-		
+	let startQuarter = 1;
 	const chartData = 
 	{
 		type: 'line',
 		data: 
 		{
-			labels: Object.keys(datasets).map(i => "Quarter " + pad(i,2)),
+			// labels: Object.keys(datasets).map(i => "Quarter " + pad(i,2)),
+			labels: Array.from({ length: 4 }, (c, i) => "Quarter " + pad(startQuarter+i,2)),
 			datasets
 		}
 	}
